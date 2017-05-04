@@ -18,7 +18,7 @@ public class Simulation {
 	private ISimulatedItemFactory factory;
 
 	public Simulation(ArrayList<SimulatedItem> items) { this.items = items; }
-	public Simulation(String[] keys, Object[] initialValues, int initialNumItems, ISimulatedItemFactory fctry) {
+	public Simulation(int initialNumItems, ISimulatedItemFactory fctry) {
 		items = new ArrayList<>(initialNumItems);
 		factory = fctry;
 
@@ -28,8 +28,7 @@ public class Simulation {
 	public void initialize(String logFolder) {
 		boolean created;
 		File logDir = Paths.get(logFolder).toFile();
-		if (!logDir.isDirectory()) { created = logDir.mkdir(); }
-		else { created = true; }
+		created = logDir.isDirectory() || logDir.mkdir();
 
 		final Path logPath = (created ? logDir.toPath() : null);
 		// Initialize each item
@@ -41,16 +40,15 @@ public class Simulation {
 		for (int i = 0; i < iters; i++) {
 			items.forEach(SimulatedItem::simulate);
 		}
-
-		// Print Results to screen and a Text file
-		items.stream()/*.filter(item -> item.isCompleted() || item.isTerminated())*/
-			.forEach(item -> {
-				try (FileWriter fw = new FileWriter("logs/SimulationOutput.log")) {
-					String res = item.generateResults();
-					fw.append(res);
+		try (FileWriter fw = new FileWriter("logs/SimulationOutput.log")) {
+			// Print Results to screen and a Text file
+			items.stream().filter(item -> item.isCompleted() || item.isTerminated())
+				.forEach(item -> {
+						String res = item.generateResults();
+					try { fw.append(res); } catch (IOException ioe) { System.err.println(ioe.toString()); }
 					System.out.println(res);
-				} catch (IOException e) { System.err.println(e.toString()); }
-			});
+				});
+		} catch (IOException ioe) { System.err.println(ioe.toString()); }
 	}
 
 	public ArrayList<SimulatedItem> getItems() { return items; }

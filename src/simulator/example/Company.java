@@ -111,6 +111,11 @@ public class Company extends SimulatedItem {
 
 		this.capitalReserves += this.profit;
 		this.ttl--;
+
+		if (this.ttl == 0) {
+			this.completed = true;
+			this.terminate();
+		}
 	}
 
 	private void computeProductProfit(double rand) {

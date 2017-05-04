@@ -20,7 +20,7 @@ import java.util.Random;
  */
 public abstract class SimulatedItem {
 
-	static int numItems = 0;
+	private static int numItems = 0;
 	/** Provided for efficient access to randomness for subclasses */
 	protected final Random random = new Random();
 
@@ -36,15 +36,15 @@ public abstract class SimulatedItem {
 	protected int ttl;
 
 	/** True if this item is ready to simulate; false otherwise */
-	private boolean initialized;
+	protected boolean initialized;
 	/** True if this item is active (participating) in the simulation; false otherwise*/
-	private boolean steppable;
+	protected boolean steppable;
 	/** True if this item has run the course of the simulation and has readied its results; false otherwise */
-	private boolean completed;
+	protected boolean completed;
 	/** True if this item has received a request to complete and terminate early; false otherwise */
-	private boolean willTerminate;
+	protected boolean willTerminate;
 	/** True if this item has terminated early; false otherwise */
-	private boolean terminated;
+	protected boolean terminated;
 
 
 	public SimulatedItem(String[] keys, Object[] initialVals) {
@@ -67,9 +67,7 @@ public abstract class SimulatedItem {
 	/** Perform additional setup prior to simulation */
 	public void initialize() { initialize(""); }
 	public void initialize(String logFilePath) { this.initialize(logFilePath != null && !logFilePath.isEmpty() ? Paths.get(logFilePath) : null); }
-	public void initialize(Path logFile) {
-		if (logFile != null) { this.logFile = logFile; }
-	}
+	public void initialize(Path logFile) { if (logFile != null) { this.logFile = logFile; } }
 
 	/** Stop simulating this item and generate its results */
 	public void terminate() {
@@ -79,7 +77,6 @@ public abstract class SimulatedItem {
 		results = generateResults();
 
 		terminated = true;
-		return;
 	}
 
 	/** Simulate one iteration */

@@ -56,16 +56,10 @@ public class DefaultFormatter implements IFormatter {
 		}
 
 		for (int i = 0; i < numResults; i++) {
-			/*if (i % 6 == 0) {
-				strbldr.append(dividerRow).append(lineSeparator);
-				strbldr.append(headerRow).append(lineSeparator);
-				strbldr.append(dividerRow).append(lineSeparator);
-			}*/
-
 			strbldr.append(keys[i]).append(" : ");
 			strbldr.append(values[i]).append(lineSeparator);
 		}
-
+		strbldr.append(lineSeparator);
 		return strbldr.toString();
 	}
 }

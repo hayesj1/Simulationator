@@ -17,7 +17,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// Pass in an instance of YOUR factory if you choose to make a different simulation!!!
-		Simulation simulation = new Simulation(keys, initialValues, 3, new ExampleItemFactory(keys, initialValues));
+		Simulation simulation = new Simulation(3, new ExampleItemFactory(keys, initialValues));
 
 		simulation.initialize(logFolder);
 
