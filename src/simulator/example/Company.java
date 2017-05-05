@@ -71,7 +71,6 @@ public class Company extends SimulatedItem {
 		productNames.add("Bob's Dishes *Requires Mrs. Builder Doll for optimal fun*");
 		productNames.add("Mrs. Builder's Kitchen *Requires Mrs. Builder Doll for optimal fun*");
 		productNames.add("Bob's Construction Site *Requires Bob's Building Blocks for optimal fun*");
-
 	}
 
 	@Override
